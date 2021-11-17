@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore context-namespace="Oltas" namespace="Oltas" p1:name="cnOltas" p1:Guid="20c9e1a3-6a99-48d4-a0bd-3be05b93a64b" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="Patient" entity-set="Patients" p1:Guid="694836a3-a079-47ea-bd8d-f1b82984cdd0">
+    <id name="id" type="Int64" p1:ValidateRequired="true" p1:Guid="19e78ee8-d1e1-42aa-9de2-b2693ad6562a">
+      <column name="" />
+    </id>
+    <property name="name" type="String" p1:ValidateRequired="true" p1:Guid="29eeaddc-6c32-4c08-9219-ccc409e5e49e">
+      <column name="" />
+    </property>
+    <property name="city" type="Int64" p1:ValidateRequired="true" p1:Guid="a841498e-4318-4a02-93c1-55c3f99ac78c">
+      <column name="" />
+    </property>
+    <property name="address" type="String" p1:ValidateRequired="true" p1:Guid="fdf504ea-e85c-428c-a8a6-6b676dfdd5a8">
+      <column name="" />
+    </property>
+  </class>
+  <class name="City" entity-set="Cities" p1:Guid="5ac0839a-e0ea-49b3-a5db-6ae01b422631">
+    <id name="id" type="Int64" p1:ValidateRequired="true" p1:Guid="ae4aec76-8efd-421e-9e70-2164fe4a6309">
+      <column name="" />
+    </id>
+    <property name="name" type="String" p1:ValidateRequired="true" p1:Guid="dc179fac-ed89-4d75-a466-821bc83c3ae8">
+      <column name="" />
+    </property>
+  </class>
+  <class name="Institute" entity-set="Institutes" p1:Guid="6128cabf-8b7d-4281-961e-308b0613012f">
+    <id name="id" type="Int64" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="bc473926-b44e-40ca-9136-71cdd3e531f9">
+      <column name="" />
+    </id>
+    <property name="instituteName" type="String" p1:ValidateRequired="true" p1:Guid="7a193aed-dbe6-4ea6-b0cb-74bfc5d99d25">
+      <column name="" />
+    </property>
+    <property name="zip" type="Int64" p1:ValidateRequired="true" p1:Guid="a9208503-409a-4dae-a2e4-294bfa859446">
+      <column name="" />
+    </property>
+  </class>
+  <class name="Vaccine" entity-set="Vaccines" p1:Guid="4ae1d41b-5cd8-4c1f-a059-7186dd238114">
+    <id name="id" type="Int64" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="ba4afee4-82dd-4626-8306-f00fae36257c">
+      <column name="" />
+    </id>
+    <property name="name" type="String" p1:ValidateRequired="true" p1:Guid="06d1d952-11f6-450d-bd10-afa0a809bfa5">
+      <column name="" />
+    </property>
+    <property name="serial" type="String" p1:ValidateRequired="true" p1:Guid="65093db5-43da-46f5-a91d-af9429bf4e5a">
+      <column name="" />
+    </property>
+  </class>
+  <class name="Physician" entity-set="Physicians" p1:Guid="8b6cef5f-77e2-43bc-a04a-d71526461199">
+    <id name="pecsetszam" type="Int64" p1:ValidateRequired="true" p1:Guid="c02a011e-360d-4f42-9de9-e17cabe0fb25">
+      <column name="" />
+    </id>
+    <property name="dr_name" type="String" p1:ValidateRequired="true" p1:Guid="b9c7450d-bcd3-468e-b358-6236537b4747">
+      <column name="" />
+    </property>
+    <property name="inst_id" type="Int64" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7f486031-94af-42f8-a81a-6986b51aa5df">
+      <column name="" />
+    </property>
+  </class>
+</efcore>
