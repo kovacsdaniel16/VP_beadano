@@ -93,13 +93,5 @@
         <property name="zip" />
       </end2>
     </association>
-    <association name="Loc_Institute" cardinality="OneToMany" p1:Guid="e84300b4-6ebf-48a5-8706-dfc39f2fa6bb">
-      <end1 multiplicity="One" name="Loc" class="Institute" relation-class="Loc" constrained="True" lazy="False" p1:Guid="ca544d97-65eb-4e64-9a4e-1c9ba1dbe4ac">
-        <property name="zip" />
-      </end1>
-      <end2 multiplicity="Many" name="Institutes" class="Loc" relation-class="Institute" lazy="False" p1:Guid="2b86a20a-dd0f-4ba4-bd3b-3c7da3071aa5">
-        <property name="zip" />
-      </end2>
-    </association>
   </associations>
 </efcore>

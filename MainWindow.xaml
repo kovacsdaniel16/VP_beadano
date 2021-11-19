@@ -6,9 +6,18 @@
         xmlns:local="clr-namespace:VP_Beadando"
         mc:Ignorable="d"
         Title="Oltás regiszter" Height="600" Width="800" Background="Ivory">
-    
-    <!--FŐ RÁCS-->
-    <Grid Margin="10px" >
+    <DockPanel>
+        
+        <Menu DockPanel.Dock="Top" >
+            <MenuItem Header="_File">
+                <MenuItem Header="_Refresh" Click="mi_RefreshClick" />
+                <MenuItem Header="_Close" Click="mi_CloseClick"/>
+                
+            </MenuItem> 
+        </Menu>
+
+        <!--FŐ RÁCS-->
+    <Grid Margin="10px" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -28,7 +37,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Click="btFelveszPaciens_Click"  Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="btFelveszPaciens" Width="100" Height="30" Margin="5">Felvesz</Button>
-            <Button Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztPaciens" Width="100" Height="30" >Kiválaszt</Button>
+            <Button Click="btTorolPaciens_Click" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztPaciens" Width="100" Height="30" >Törlés</Button>
         </Grid>
 
         <!--Vakcina adatok gombjai-->
@@ -38,7 +47,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Click="btHozzaadVakcina_Click"  Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="btHozzaadVakcina" Width="100" Height="30" Margin="5">Hozzáad</Button>
-            <Button Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztVakcina" Width="100" Height="30" >Kiválaszt</Button>
+            <Button Click="btTorolVakcina_Click" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztVakcina" Width="100" Height="30" >Töröl</Button>
         </Grid>
 
 
@@ -49,7 +58,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Click="btHozzaadOrvos_Click" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Name="btHozzaadOrvos" Width="100" Height="30" Margin="5">Hozzáad</Button>
-            <Button Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztOrvos" Width="100" Height="30" >Kiválaszt</Button>
+            <Button Click="btTorolOrvos_Click" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Name="btKivalasztOrvos" Width="100" Height="30" >Töröl</Button>
         </Grid>
         
         
@@ -82,17 +91,21 @@
             <TextBox x:Name="tbName" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Center" Margin="10"/>
             <TextBox x:Name="tbTaj" Grid.Column="1" HorizontalAlignment="Stretch"  Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10"/>
             <TextBox x:Name="tbCim" Grid.Column="1" HorizontalAlignment="Stretch"  Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10"/>
-            <ComboBox Name="cbPacienszip" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="3" VerticalAlignment="Center"/>
-            <Label Content="Páciens adatok:" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                <ComboBox x:Name="cbPacienszip" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="3" VerticalAlignment="Center" ItemsSource="{Binding}" DisplayMemberPath="telepules" SelectedValuePath="zip" />
 
-            <ListView Name="lvPList" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="5">
-                <!--páciens lista-->
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+
+                <Label Content="Páciens adatok:" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2"/>
+
+                <DataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="dgPatients" ItemsSource="{Binding}" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" SelectionChanged="dgPatients_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="TAJ" Binding="{Binding id}"/>
+                        <DataGridTextColumn Header="Név" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="Város" Binding="{Binding zip}"/>
+                        <DataGridTextColumn Header="Cím" Binding="{Binding address}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--https://youtu.be/fksgm-CR1Z4?t=1431-->
 
 
         </Grid>
@@ -115,16 +128,16 @@
             <TextBox Name="tbVaccineName" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Top"/>
             <TextBox Name="tbSerial" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="2"  TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-            <!-- VAKCINA LIST VIEW-->
-            <ListView Name="lvVlist" Margin="5" Grid.Row="3"  Grid.ColumnSpan="2">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <!-- VAKCINA datagrid-->
+                <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="dgVaccines" ItemsSource="{Binding}" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" SelectionChanged="dgVaccines_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Header="Oltóanyag" Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="Serial number" Binding="{Binding serial}"/>
 
-            <Grid.ColumnDefinitions>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
@@ -150,17 +163,17 @@
             <TextBox Name="tbPecset" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center"/>
             <TextBox Name="tbDrName" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center"/>
 
-            <!--ORVOS LISTA-->
-            <ListView Name="lvDlist" Grid.Row="3" Margin="5" Grid.ColumnSpan="2">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <!--ORVOS datagrid-->
+                <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="dgPhysicians" ItemsSource="{Binding}" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" SelectionChanged="dgPhysicians_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Header="Orvos neve" Binding="{Binding dr_name}"/>
+                        <DataGridTextColumn Header="Pecsétszám" Binding="{Binding pecsetszam}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
 
 
-            <Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
@@ -185,7 +198,8 @@
             <Label Content="Város:" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Margin="5"/>
             
             <!--KORHAZ ADATOK-->
-            <ComboBox Name="cbKorhazdata" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center"/>
+
+            <ComboBox x:Name="cbKorhazdata" ItemsSource="{Binding}"  DisplayMemberPath="instituteName" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center" SelectionChanged="cbKorhazdata_SelectionChanged"/>
             <TextBox Name="tbKorhazname" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="2" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Center"/>
             <TextBox Name="tbKorhazcim" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" Grid.Row="3" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Center"/>
         </Grid>
@@ -221,4 +235,6 @@
 
 
     </Grid>
+        
+    </DockPanel>
 </Window>
