@@ -52,6 +52,35 @@
       <column name="" />
     </property>
   </class>
+  <class name="Oltott" entity-set="Oltotts" p1:Guid="3db3d951-5e6c-44cc-8ef7-968d367ab8f4">
+    <id name="id" type="Int32" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="8949fbc9-f446-49b1-8d2d-9abeef03da0b">
+      <column name="" />
+    </id>
+    <property name="patient" type="String" p1:ValidateRequired="true" p1:Guid="6e91d4de-1a51-4774-8934-d61c8978d0ec">
+      <column name="" />
+    </property>
+    <property name="taj" type="Int32" p1:ValidateRequired="true" p1:Guid="9f0099ba-9822-4565-a18e-0bca85aa4645">
+      <column name="" />
+    </property>
+    <property name="oltanyag" type="String" p1:ValidateRequired="true" p1:Guid="74da9c7b-8037-433d-8838-191afc1ccc59">
+      <column name="" />
+    </property>
+    <property name="serialnumber" type="String" p1:ValidateRequired="true" p1:Guid="89699dfb-6b38-4c6c-8a75-4478ab171d6a">
+      <column name="" />
+    </property>
+    <property name="time" type="DateTime" value-generated="OnAdd" p1:ValidateRequired="true" p1:Guid="a92e409f-e85e-4570-9e4a-c1203947589d">
+      <column name="" />
+    </property>
+    <property name="orvosnev" type="String" p1:ValidateRequired="true" p1:Guid="9ddd7e6a-564f-48cf-a7c2-16f801735a45">
+      <column name="" />
+    </property>
+    <property name="orvospecset" type="Int32" p1:ValidateRequired="true" p1:Guid="aa99e212-f4fb-499b-a617-08d60e3bd7e7">
+      <column name="" />
+    </property>
+    <property name="intezmeny" type="String" p1:ValidateRequired="true" p1:Guid="e3a5ce58-e540-49ca-9aad-75cde7e00c9b">
+      <column name="" />
+    </property>
+  </class>
   <associations>
     <association name="Patient_Institute" cardinality="ManyToMany" p1:Guid="8f94847a-fcd2-413d-9c04-280d4cfc8a12">
       <end1 multiplicity="Many" name="Patients" class="Institute" relation-class="Patient" lazy="False" p1:Guid="2492e799-03c1-4dff-b22d-94eb997e7c93">

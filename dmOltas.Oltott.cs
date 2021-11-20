@@ -18,24 +18,30 @@ using System.Linq.Expressions;
 
 namespace Oltas
 {
-    public partial class Institute {
+    public partial class Oltott {
 
-        public Institute()
+        public Oltott()
         {
-            this.Patients = new List<Patient>();
-            this.Physicians = new List<Physician>();
             OnCreated();
         }
 
         public virtual int id { get; set; }
 
-        public virtual string instituteName { get; set; }
+        public virtual string patient { get; set; }
 
-        public virtual int zip { get; set; }
+        public virtual int taj { get; set; }
 
-        public virtual IList<Patient> Patients { get; set; }
+        public virtual string oltanyag { get; set; }
 
-        public virtual IList<Physician> Physicians { get; set; }
+        public virtual string serialnumber { get; set; }
+
+        public virtual DateTime time { get; set; }
+
+        public virtual string orvosnev { get; set; }
+
+        public virtual int orvospecset { get; set; }
+
+        public virtual string intezmeny { get; set; }
 
         #region Extensibility Method Definitions
 

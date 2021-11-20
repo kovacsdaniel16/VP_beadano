@@ -220,16 +220,25 @@
 
             </Grid.ColumnDefinitions>
             
-            <ListView Name="lvSum" Grid.ColumnSpan="4" Margin="10">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+           
 
-            <Button Name="btHozzaadOltottak" Padding="10,0,10,0" Grid.Column="2" HorizontalAlignment="Right" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold">Hozzáad</Button>
-            <Button Name="btTorolOltottak" Padding="10,0,10,0" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold">Töröl</Button>
+                <DataGrid Grid.ColumnSpan="4" x:Name="dgSum" ItemsSource="{Binding}" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="10" SelectionChanged="dgSum_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Header="Páciens neve" Binding="{Binding patient}"/>
+                        <DataGridTextColumn Header="TAJ" Binding="{Binding taj}"/>
+                        <DataGridTextColumn Header="Vakcina" Binding="{Binding oltanyag}"/>
+                        <DataGridTextColumn Header="S/N" Binding="{Binding serialnumber}"/>
+                        <DataGridTextColumn Header="Dátum" Binding="{Binding time}"/>
+                        <DataGridTextColumn Header="Orvos" Binding="{Binding orvosnev}"/>
+                        <DataGridTextColumn Header="Intézmény" Binding="{Binding intezmeny}"/>
+
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Click="btHozzaadOltottak_Click" Name="btHozzaadOltottak" Padding="10,0,10,0" Grid.Column="2" HorizontalAlignment="Right" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold">Hozzáad</Button>
+            <Button Click="btKivalasztOltottak_Click" Name="btKivalasztOltottak" Padding="10,0,10,0" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold">Kiválaszt</Button>
         </Grid>
 
 

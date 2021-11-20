@@ -21,29 +21,33 @@ namespace VP_Beadando
     /// </summary>
     public partial class MainWindow : Window
     {
-        cnOltas cn;
+        cnOltas cn; 
+        
 
         public MainWindow()
         {
             InitializeComponent();
-            cn = new cnOltas();
-            initPatientList();
+            cn = new cnOltas(); //oltás osztály példáyosítása
+            initPatientList(); //az egyes komponensek inicializáló metódusa
             initVaccineList();
             initPhysicianList();
             initHospList();
+            initSumList();
+            
             
         }
 
         public void initHospList()
         {
             cbKorhazdata.ItemsSource = cn.Institutes.ToList();
+            //meghatározom, hogy a xaml-ban található ComboBox adatai honnan származnak 
            
 
         }
 
         public void initPatientList()
         {
-            dgPatients.Visibility = Visibility.Visible;
+            dgPatients.Visibility = Visibility.Visible; //az alapból összecsukott DataGrid megjelenítése
             dgPatients.ItemsSource = cn.Patients.ToList();
             cbPacienszip.ItemsSource = cn.Locs.ToList();
 
@@ -52,6 +56,7 @@ namespace VP_Beadando
         public void initVaccineList()
         {
             dgVaccines.Visibility = Visibility.Visible;
+            //VakcinaDataGrid adatok forrása
             dgVaccines.ItemsSource = cn.Vaccines.ToList();
         }
 
@@ -61,6 +66,11 @@ namespace VP_Beadando
             dgPhysicians.ItemsSource = cn.Physicians.ToList();
         }
 
+        public void initSumList()
+        {
+            dgSum.Visibility = Visibility.Visible;
+            dgSum.ItemsSource = cn.Oltotts.ToList();
+        }
        
 
         private void btFelveszPaciens_Click(object sender, RoutedEventArgs e)
@@ -97,12 +107,12 @@ namespace VP_Beadando
             }
 
             else { MessageBox.Show("Nincs kitöltve minden mező!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error); }
-            initPatientList();
+            initPatientList(); //frissítjük a listát, h lássuk az eredményt
         }
 
         private void btHozzaadVakcina_Click(object sender, RoutedEventArgs e)
         {
-            cn.Database.EnsureCreated();
+            cn.Database.EnsureCreated(); //ugyanaz a folyamat, mint feljebb
             Vaccine v = new Vaccine();
             if (!string.IsNullOrEmpty(tbVaccineName.Text) && !string.IsNullOrEmpty(tbSerial.Text))
             {
@@ -129,7 +139,7 @@ namespace VP_Beadando
 
         private void btHozzaadOrvos_Click(object sender, RoutedEventArgs e)
         {
-            cn.Database.EnsureCreated();
+            cn.Database.EnsureCreated(); //folyamatot lásd btFelveszPaciens_Click
             Physician p = new Physician();
 
             if (!string.IsNullOrEmpty(tbDrName.Text) && !string.IsNullOrEmpty(tbPecset.Text))
@@ -157,6 +167,7 @@ namespace VP_Beadando
         private void mi_CloseClick(object sender, RoutedEventArgs e) //https://youtu.be/fksgm-CR1Z4?t=1097
         {
             Application.Current.Shutdown(); 
+            //az app kikapcsolása forrás: órai anyag
         }
 
         private void btTorolPaciens_Click(object sender, RoutedEventArgs e)
@@ -164,13 +175,15 @@ namespace VP_Beadando
 
                 var delpat = dgPatients.SelectedItem as Patient;
                 MessageBox.Show("Törölni fogja a/az " + delpat.name + " nevű pácienst!", "Info", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            //betöltjük egy változóba a kiválaszott sor referenciáját
 
 
+                cn.Patients.Remove(delpat); //kitöröljük a listából a kiváalszott sort
+                cn.SaveChanges(); //elmentjük a változásokat
 
-                cn.Patients.Remove(delpat);
-                cn.SaveChanges();
+                initPatientList(); //frissítés
 
-                initPatientList();
+            //örülünk
 
          
           
@@ -178,24 +191,29 @@ namespace VP_Beadando
 
         private void mi_RefreshClick(object sender, RoutedEventArgs e)
         {
+            //a menün található frissítés gomb inicializáló metódusokat fog lefuttatni
             initPatientList();
             initVaccineList();
             initPhysicianList();
             initHospList();
+            initSumList();
         }
 
        
 
         private void cbKorhazdata_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // kiválasztunk egy adatsort a comboboxból
             var khn = cbKorhazdata.SelectedItem as Institute;
-            if (khn == null) return;
-            tbKorhazname.Text = khn.instituteName;
-            tbKorhazcim.Text = khn.zip.ToString();
+            // betöltjük a referenciáját egy változóba
+            if (khn == null) return; //ha nem sikerült, kiszállunk
+            tbKorhazname.Text = khn.instituteName;//a referencia megfelelő tagját a kijelölt TextBoxba másoljuk
+            tbKorhazcim.Text = khn.zip.ToString();// szintén
         }
 
         private void dgPatients_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //lásd private void cbKorhazdata_SelectionChanged(...)
             var patient = dgPatients.SelectedItem as Patient;
             if (patient == null) return;
             tbName.Text = patient.name;
@@ -204,6 +222,7 @@ namespace VP_Beadando
 
         private void btTorolVakcina_Click(object sender, RoutedEventArgs e)
         {
+            //lásd private void btTorolPaciens_Click()
             var delvacc = dgVaccines.SelectedItem as Vaccine;
             MessageBox.Show("Törölni fogja a/az " + delvacc.serial + " sorozatszámú oltóanyagot!", "Info", MessageBoxButton.OK, MessageBoxImage.Exclamation); 
 
@@ -215,6 +234,7 @@ namespace VP_Beadando
 
         private void dgVaccines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //lásd korábban
             var vaccine = dgVaccines.SelectedItem as Vaccine;
             if (vaccine == null) return;
             tbVaccineName.Text = vaccine.name;
@@ -225,6 +245,7 @@ namespace VP_Beadando
 
         private void btTorolOrvos_Click(object sender, RoutedEventArgs e)
         {
+            //lásd korábban
             var deldoc = dgPhysicians.SelectedItem as Physician;
             MessageBox.Show("Törölni fogja a/az " + deldoc.pecsetszam + " pecsétszámú orvost!", "Info", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
@@ -240,6 +261,54 @@ namespace VP_Beadando
             if (physician == null) return;
             tbDrName.Text = physician.dr_name;
             tbPecset.Text = physician.pecsetszam.ToString();
+        }
+
+        private void btHozzaadOltottak_Click(object sender, RoutedEventArgs e) //
+        {
+            //itt is betöltöm az textboxokból begyűjtött változókat és hozzáadom őket az Oltott adatbázishoz
+            cn.Database.EnsureCreated();
+            Oltott o = new Oltott();
+
+            try // ide kellett volna csinálni egy if/else vizsgálatot, hogy csak nem üres mezőkből lehessen adatot bekérni
+            {
+                o.patient = tbName.Text; // a különböző mezők értékei
+                o.taj = int.Parse(tbTaj.Text);
+                o.oltanyag = tbVaccineName.Text;
+                o.serialnumber = tbSerial.Text;
+                DateTime now = DateTime.Now;
+                o.time = now;
+                o.orvosnev = tbDrName.Text;
+                o.orvospecset = int.Parse(tbPecset.Text);
+                o.intezmeny = tbKorhazname.Text;
+
+                cn.Oltotts.Add(o);
+                cn.SaveChanges();
+                MessageBox.Show(o.patient + " (" + o.taj + ")-t sikeresen beoltották.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
+
+        }
+
+        private void dgSum_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+           var szum = dgSum.SelectedItem as Oltott;
+            if (szum == null) return;
+           /* var query = physician.dr_name;
+            tbPecset.Text = physician.pecsetszam.ToString();
+           
+            */
+
+        }
+
+        private void btKivalasztOltottak_Click(object sender, RoutedEventArgs e)
+        {
+           //ide szerettem volna még csinálni egy Query-t amivel rá tudok keresni páciensre, hogy kilistázza, hány oltást kapott, és mikor, de erre már nem volt időm :(
         }
     }
 }

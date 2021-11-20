@@ -10,6 +10,7 @@
         <File Name="dmOltas.Vaccine.cs" />
         <File Name="dmOltas.Physician.cs" />
         <File Name="dmOltas.Loc.cs" />
+        <File Name="dmOltas.Oltott.cs" />
       </GeneratedFiles>
     </Generation>
     <DatabaseFirstNamingRules>
